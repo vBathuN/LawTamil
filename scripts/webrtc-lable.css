@@ -20,6 +20,7 @@
     word-spacing: -5px;
     font-size: 3.125vw !important; 
 }
+
 .video-label>span:nth-child(2) {
     font-size: 2.5vw !important;
     display: block;
