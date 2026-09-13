@@ -61,19 +61,3 @@
 }
 
 /* 🟢 Smart Audio Avatar Highlight Logic 🟢 */
-
-/* பேசாத போது படம் மங்கலாக இருக்க */
-video, .avatar {
-    border-radius: 15px !important;
-    opacity: 0.6 !important;
-    transform: scale(0.95) !important;
-    transition: all 0.3s ease !important;
-}
-
-/* பேசும்போது மட்டும் ஒளிர */
-.speaking video, .speaking .avatar {
-    opacity: 1 !important;
-    transform: scale(1.05) !important;
-    box-shadow: 0px 0px 20px 5px rgba(255, 202, 112, 0.8) !important;
-    border: 3px solid #ffca70 !important;
-}
