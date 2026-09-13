@@ -62,15 +62,20 @@
 
 /* 🟢 Smart Audio Avatar Highlight Logic 🟢 */
 
-/* புகைப்படத்தை வெட்டப்படாமல் முழுமையாகக் காட்ட */
-video, img {
+/* &cover கமாண்டின் விளைவை முறியடித்து படத்தை அடக்கமாகக் காட்ட */
+.holder video {
     object-fit: contain !important;
     border-radius: 15px !important;
+    
+    /* பாஸ்போர்ட் அளவு போல சிறிதாக்க scale பயன்படுத்தலாம் (1 = 100%, 0.8 = 80%) */
+    transform: scale(0.85) !important; 
+    
     background-color: transparent !important;
 }
 
-/* பேசும்போது மட்டும் ஒளிர (தேவைப்பட்டால் மட்டும் பயன்படுத்தவும்) */
-.speaking video, .speaking img {
-    box-shadow: 0px 0px 20px 5px rgba(255, 202, 112, 0.8) !important;
-    border: 2px solid #ffca70 !important;
+/* குறிப்பிட்ட நபரின் (ஏகாந்தன்) வீடியோவை மட்டும் குறிவைத்து அளவை மாற்றுவது */
+div[data-label="ஏகாந்தன்"] video {
+    object-fit: contain !important;
+    transform: scale(0.85) !important;
+    border-radius: 15px !important;
 }
