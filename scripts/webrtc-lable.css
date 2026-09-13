@@ -73,9 +73,14 @@
     background-color: transparent !important;
 }
 
-/* குறிப்பிட்ட நபரின் (ஏகாந்தன்) வீடியோவை மட்டும் குறிவைத்து அளவை மாற்றுவது */
-div[data-label="ஏகாந்தன்"] video {
-    object-fit: contain !important;
-    transform: scale(0.85) !important;
+/* பேசும்போது மட்டும் படம் ஒளிர (Glow Effect) */
+.speaking video, video.speaking, div.speaking video {
+    box-shadow: 0px 0px 25px 8px rgba(255, 202, 112, 0.9) !important;
+    border: 3px solid #ffca70 !important;
+    
+    /* இயல்பாக 0.85-ல் இருக்கும் படம், பேசும்போது 0.88-க்கு லேசாகப் பெரிதாகத் தெரியும் */
+    transform: scale(0.88) !important; 
+    
+    transition: all 0.2s ease-in-out !important;
     border-radius: 15px !important;
 }
