@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LawTamil Studio - Seamless Image Slider</title>
+  <style>
+    /* பக்கம் முழுவதையும் பயன்படுத்த CSS */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: transparent; /* பின்னணி மறைய */
+    }
+
+    .slidernivo, .recent-slider {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .nivoSlider {
+      position: relative;
+      width: 100% !important;
+      height: 100% !important;
+      overflow: hidden;
+    }
+
+    /* மெயின் படங்களுக்கு 100% அகலம் மற்றும் Cover */
+    .nivoSlider > a > img,
+    .nivoSlider > img,
+    .nivo-main-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover; 
+    }
+
+    /* அனிமேஷன் துண்டுகள் சுதந்திரமாக இயங்கச் செய்தல் */
+    .nivo-slice, .nivo-box {
+      display: block;
+      position: absolute;
+      z-index: 5;
+      overflow: hidden; 
+    }
+    
+    .nivo-slice img, .nivo-box img {
+      display: block;
+      position: absolute;
+      max-width: none !important;
+      height: 100% !important;
+      object-fit: cover;
+    }
+
+    .nivo-caption { display: none !important; }
+    .nivo-directionNav a { display: none !important; }
+    .nivo-controlNav { display: none !important; }
+  </style>
+</head>
+
+<body>
+
+  <div class='slidernivo'>
+    <!-- jmain என்ற லேபிளை மட்டும் எடுக்கும்படி அமைக்கப்பட்டுள்ளது -->
+    <div class='recent-slider' data-label='lts'></div>
+  </div>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src='https://assets.lawtamil.in/scripts/nivoslider.js'></script>
+
+  <script>
+    $(".recent-slider").each(function() {
+      var container = $(this);
+      container.append('<div id="slider" class="nivoSlider"></div>');
+      
+      var label = container.attr("data-label");
+      // குறிப்பிட்ட லேபிளில் உள்ள 1 பதிவின் முழு உள்ளடக்கத்தை (default) எடுக்க URL
+      var feedUrl = "https://feed.lawtamil.in/feeds/posts/default/-/" + label + "?max-results=1&alt=json-in-script";
+
+      $.ajax({
+        type: "GET",
+        url: feedUrl,
+        async: true,
+        contentType: "application/json",
+        dataType: "jsonp",
+        success: function(data) {
+          if (data.feed && data.feed.entry && data.feed.entry.length > 0) {
+            // பதிவின் முழு HTML உள்ளடக்கத்தை எடுப்போம்
+            var contentHtml = data.feed.entry[0].content.$t;
+            
+            // உள்ளடக்கத்திலிருந்து <img> டேக்குகளை மட்டும் பிரிக்கிறோம்
+            var tempDiv = $('<div>').html(contentHtml);
+            tempDiv.find('img').each(function() {
+              var imgUrl = $(this).attr('src');
+              if (imgUrl) {
+                // Original Quality-க்காக s1600-க்கு URL-ஐ மாற்றுகிறோம்
+                imgUrl = imgUrl.replace(/\/s\d+(-c)?\//g, "/s1600/"); 
+                container.find("#slider").append('<img src="' + imgUrl + '" alt="" />');
+              }
+            });
+
+            // அனைத்து படங்களும் சேர்க்கப்பட்ட பின் Slider-ஐ இயக்குகிறோம்
+            $("#slider").nivoSlider({
+              effect: "sliceDown,sliceUpDown,sliceUpDownLeft,fold,fade", 
+              pauseTime: 5000, 
+              animSpeed: 800, 
+              directionNav: false,
+              controlNav: false,
+              pauseOnHover: false
+            });
+          }
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
