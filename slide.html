@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>LawTamil Studio - Seamless Image Slider</title>
+  <title>LawTamil Studio - LTS Slider</title>
   <style>
     /* பக்கம் முழுவதையும் பயன்படுத்த CSS */
     html, body {
@@ -92,7 +92,9 @@
             
             // உள்ளடக்கத்திலிருந்து <img> டேக்குகளை மட்டும் பிரிக்கிறோம்
             var tempDiv = $('<div>').html(contentHtml);
-            tempDiv.find('img').each(function() {
+            
+            // படங்கள் 32, 31, 30 என வராமல் 1, 2, 3 என சரியான வரிசையில் வர .get().reverse() சேர்க்கப்பட்டுள்ளது
+            $(tempDiv.find('img').get().reverse()).each(function() {
               var imgUrl = $(this).attr('src');
               if (imgUrl) {
                 // Original Quality-க்காக s1600-க்கு URL-ஐ மாற்றுகிறோம்
